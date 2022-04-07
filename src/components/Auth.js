@@ -13,7 +13,12 @@ export const Auth = () => {
 
   if (signedIn === true) {
     return <Home />;
-  } else {
-    return <SignInForm />;
-  }
+  } 
+  
+  return <SignInForm />;
+
+  
+  
+
+
 };

@@ -6,6 +6,7 @@ import { getAuth } from 'firebase/auth';
 import { Auth } from './components/Auth';
 import { AddWorkForm } from './components/AddWorkForm';
 import { StartTracking } from './components/StartTracking';
+import { Edit } from './components/Edit';
 
 function App() {
   const firebaseApp = useFirebaseApp();
@@ -37,7 +38,8 @@ function App() {
         <Routes>
             <Route path="/" element={<Auth />} />
             <Route path="/add" element={<AddWorkForm />} />
-            <Route path="/track" element={<StartTracking />}/>
+            <Route path="/track" element={<StartTracking />} />
+            <Route path="/edit" element={<Edit />}/>
             
       </Routes>
      

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
-import { doc, collection, setDoc } from 'firebase/firestore';
+import { doc, collection, setDoc, addDoc } from 'firebase/firestore';
 import { useSigninCheck } from 'reactfire';
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { useFirestore, useFirestoreDocData } from 'reactfire';
 import format from "date-fns/format";
-import { differenceInMinutes, lightFormat } from "date-fns";
+import { differenceInMinutes, intervalToDuration, lightFormat } from "date-fns";
+
+
+
+
+
 
 export const AddWorkForm = () => {
   // eslint-disable-next-line no-unused-vars
@@ -15,6 +20,7 @@ export const AddWorkForm = () => {
   const [startTime, setStartTime] = useState("08:00")
   const [endTime, setEndTime] = useState(lightFormat(new Date(), 'HH:mm'))
   const [date, setDate] = useState(lightFormat(new Date(), 'yyyy-MM-dd'))
+  const [employer, setEmployer] = useState("Troens Bevis")
 
 
  
@@ -30,17 +36,20 @@ export const AddWorkForm = () => {
   const worklistCollection = collection(firestore, "users", user.email, "worklist");
   const handleSubmit = (event) => {
     event.preventDefault();
-    const timeworked = differenceInMinutes(new Date(`${format(new Date(date), "P")}  ${endTime}`), new Date(`${format(new Date(date), "P")}  ${startTime}`))
+    
+    const timeworked = intervalToDuration({ start: new Date(`${format(new Date(date), "P")}  ${endTime}`), end: new Date(`${format(new Date(date), "P")}  ${startTime}`) })
 
     const newWorkSession = {
       date: date,
       startTime: startTime,
       endTime: endTime,
-      minutesworked: timeworked,
+      timeworked,
       userId: user.uid,
-      user: user.email
+      user: user.email,
+      employer
+
     };
-    setDoc(doc(worklistCollection, `${date} ${startTime}-${endTime}`), newWorkSession);
+    addDoc(worklistCollection, newWorkSession);
     console.log(newWorkSession)
     navigate("/");
   };
@@ -78,6 +87,12 @@ export const AddWorkForm = () => {
           <br/>
         <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value) }/>
         </label>
+        <label htmlFor="employer">Arbeidsgiver:</label>
+        <select id="employer" name="employer" onChange={(e) => { setEmployer(e.target.value) }}>
+  <option value="Troens Bevis">Troens Bevis</option>
+  <option value="Sarons Dal AS">Sarons Dal AS</option>
+  
+</select>
           
 
           <p className="text-sm text-right">{user.displayName}</p>
