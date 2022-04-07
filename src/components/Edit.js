@@ -1,8 +1,7 @@
-import { format, formatDuration, intervalToDuration, lightFormat } from "date-fns";
-import { nb } from "date-fns/locale";
+import { format, intervalToDuration, lightFormat } from "date-fns";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useFirestore, useFirestoreDocData, useSigninCheck } from "reactfire";
 
 
@@ -10,7 +9,7 @@ export const Edit = () => {
      const firestore = useFirestore();
      const { data: signinResult, status: signInStatus } = useSigninCheck();
      const { user } = signinResult;
-    let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams] = useSearchParams();
     const navigate = useNavigate()
     let document = searchParams.get("id")
 

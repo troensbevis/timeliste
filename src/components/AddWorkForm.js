@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { doc, collection, setDoc, addDoc } from 'firebase/firestore';
-import { useSigninCheck } from 'reactfire';
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { useFirestore, useFirestoreDocData } from 'reactfire';
+import { intervalToDuration, lightFormat } from "date-fns";
 import format from "date-fns/format";
-import { differenceInMinutes, intervalToDuration, lightFormat } from "date-fns";
+import { addDoc, collection } from 'firebase/firestore';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useFirestore, useSigninCheck } from 'reactfire';
 
 
 
@@ -27,7 +26,6 @@ export const AddWorkForm = () => {
 
 
   const firestore = useFirestore();
-  const userRef = doc(firestore, "users", user.email);
   
 
 
