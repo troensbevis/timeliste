@@ -44,7 +44,7 @@ export const Home = () => {
             )}
             </div>
             <div className="grid  content-center justify-center  place-items-center pt-3">
-            <Link to="/add"  className="bg-emerald-700 text-center w-24 p-2 text-emerald-100 rounded-md">Legg til timer</Link> 
+            <Link to="/add"  className="bg-emerald-700 text-center w-28 p-2 text-emerald-100 rounded-md">Legg til timer</Link> 
                 
                 </div>
             </div>
